@@ -3,12 +3,18 @@
 return [
     // post install tasks - e.g. cache clearing, running migrations, etc...
     'postinstall' => [
-        'register:supervisor' => [
-            'name'     => '',
-            'user'     => '',
-            'command'  => '',
-            'logfile'  => '',
-            'numprocs' => '',
+        'artisan' => [
+            'register:supervisor' => [
+                '--name'     => '',
+                '--user'     => '',
+                '--command'  => '',
+                '--logfile'  => '',
+                '--numprocs' => '4',
+            ]
+        ],
+        'shell'   => [
+            'whoami',
+            'ls' => ['-l']
         ]
     ],
     'supervisor'  => [

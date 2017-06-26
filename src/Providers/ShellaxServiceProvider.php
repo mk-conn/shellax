@@ -6,7 +6,7 @@
  * Time: 14:12
  */
 
-namespace Mdc\Shellax\Providers;
+namespace MkConn\Shellax\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -37,23 +37,34 @@ class ShellaxServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(
-            'supervisor', function ($app) {
-            return new Supervisor();
-        });
+        if ($this->app->runningInConsole()) {
 
-        $this->app->singleton(
-            'command.shellax.postinstall-command', function () {
-            return new PostInstallCommand();
-        });
+            $this->app->singleton(
+                'supervisor', function ($app) {
+                return new Supervisor();
+            });
 
-        $this->app->singleton(
-            'command.shellax.register-shellax-command',
-            function ($app) {
-                return new RegisterSupervisorCommand($app['supervisor']);
-            }
-        );
+            $this->commands(
+                [
+                    PostInstallCommand::class,
+                    RegisterSupervisorCommand::class
+                ]);
+        }
 
-        $this->commands(['command.shellax.postinstall-command', 'command.shellax.register-shellax-command']);
+//        if($this->run)
+
+//        $this->app->singleton(
+//            'command.shellax.postinstall-command', function () {
+//            return new PostInstallCommand();
+//        });
+
+//        $this->app->singleton(
+//            'command.shellax.register-shellax-command',
+//            function ($app) {
+//                return new RegisterSupervisorCommand($app['supervisor']);
+//            }
+//        );
+
+//        $this->commands(['command.shellax.postinstall-command', 'command.shellax.register-shellax-command']);
     }
 }

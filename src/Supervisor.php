@@ -6,7 +6,7 @@
  * Time: 14:31
  */
 
-namespace Mdc\Shellax;
+namespace MkConn\Shellax;
 
 
 use Symfony\Component\Process\Exception\ProcessFailedException;

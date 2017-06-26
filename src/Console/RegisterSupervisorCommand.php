@@ -10,7 +10,7 @@ namespace Mkconn\Shellax\Console;
 
 
 use Illuminate\Console\Command;
-use Mdc\Shellax\Supervisor;
+use MkConn\Shellax\Supervisor;
 
 /**
  * Class RegisterSupervisorCommand
@@ -22,7 +22,7 @@ class RegisterSupervisorCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'shellax:register
+    protected $signature = 'shellax:supervisor-register
                             {--name= : The programm name.} 
                             {--user= : The user the process should run with.} 
                             {--command= : The command to be executed.}
@@ -32,7 +32,7 @@ class RegisterSupervisorCommand extends Command
     /**
      * @var string
      */
-    protected $description = 'Register a shellax command (you probably have to run this command as root)';
+    protected $description = 'Register a programm in supervisor (you probably have to run this command as root)';
 
     /**
      * @var Supervisor
