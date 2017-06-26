@@ -10,7 +10,7 @@ namespace Mkconn\Shellax\Console;
 
 
 use Illuminate\Console\Command;
-use Mdc\Supervisor\Supervisor;
+use Mdc\Shellax\Supervisor;
 
 /**
  * Class RegisterSupervisorCommand

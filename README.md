@@ -12,19 +12,24 @@
 This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
 PSRs you support to avoid any confusion with users and contributors.
 
+## Why
+
+To ease deployments - running tasks after deploy/install like cache cleaning, adding supervisor programms ... 
+
+
 ## Install
 
 Via Composer
 
 ``` bash
-$ composer require :vendor/:package_name
+$ composer require mk-conn/shellax
 ```
 
 ## Usage
 
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+php artisan shellax:postintall
+php artisan shellax:supervisor-register
 ```
 
 ## Change log
