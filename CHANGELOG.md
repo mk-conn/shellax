@@ -4,10 +4,10 @@ All Notable changes to `mk-conn/shellax` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## NEXT - YYYY-MM-DD
+## [0.0.1a] - 2017-06-27
 
 ### Added
-- Nothing
+- Tag - trying to follow semantic versioning
 
 ### Deprecated
 - Nothing
