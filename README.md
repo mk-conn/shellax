@@ -19,7 +19,21 @@ $ composer require mk-conn/shellax
 
 ## Usage
 
-``` php
+In your `config/app.php` add the Shellax service provider like so:
+
+```php
+'providers' => // ... other providers 
+
+    MkConn\Shellax\Providers\ShellaxServiceProvider::class,
+    
+```
+
+Publish the shellax config 
+```bash
+php artisan vendor:publish --provider="MkConn\Shellax\Providers\ShellaxServiceProvider"
+```
+
+```bash
 php artisan shellax:postintall
 php artisan shellax:supervisor-register
 ```
