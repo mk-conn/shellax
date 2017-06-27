@@ -11,6 +11,8 @@ namespace MkConn\Shellax\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 /**
  * Class PostInstallCommand
@@ -35,6 +37,15 @@ class PostInstallCommand extends Command
      */
     public function handle()
     {
+        $this->runArtisanCommands()
+             ->runShellCommands();
+    }
+
+    /**
+     * @return $this
+     */
+    protected function runArtisanCommands()
+    {
         $artisanCommands = config('shellax.postinstall.artisan');
 
         foreach ($artisanCommands as $artisanCommand => $args) {
@@ -44,6 +55,39 @@ class PostInstallCommand extends Command
 
             Artisan::call($artisanCommand, $args);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function runShellCommands()
+    {
+
+        $shellCommands = config('shellax.postinstall.shell');
+
+        foreach ($shellCommands as $shellCommand => $args) {
+
+            if (is_array($args)) {
+                foreach ($args as $arg => $value) {
+                    $shellCommand .= $arg . ' ' . $value;
+                }
+            } else {
+                $shellCommand = $args;
+            }
+
+            $process = new Process($shellCommand);
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+//            $this->output->write($shellCommand.': ');
+            echo $process->getOutput();
+        }
+
+        return $this;
     }
 
 }
