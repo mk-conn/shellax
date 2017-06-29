@@ -10,7 +10,9 @@ namespace MkConn\Shellax;
 
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\CommandNotFoundException;
+use Symfony\Component\Console\Style\OutputStyle;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -21,6 +23,18 @@ use Symfony\Component\Process\Process;
  */
 class Supervisor
 {
+    /**
+     * @var OutputStyle
+     */
+    protected $command = null;
+
+    /**
+     * @param $output
+     */
+    public function setCommand(Command $command)
+    {
+        $this->command = $command;
+    }
 
     /**
      * Check, if supervisor is installed
@@ -36,9 +50,20 @@ class Supervisor
                 'Supervisor is not installed, but required to run supervisor related tasks.');
         }
 
-        echo 'Running with supervisor ' . $process->getOutput();
+        $this->inform('Running with supervisor ' . $process->getOutput());
     }
 
+    /**
+     * @param $message
+     */
+    public function inform($message)
+    {
+        if ($this->command) {
+            $this->command->info($message);
+        } else {
+            echo $message;
+        }
+    }
 
     /**
      * @param $config
@@ -49,11 +74,11 @@ class Supervisor
         $this->preCheck();
 
         $replace = [
-            '/__command__/' => $config['command'],
-            '/__name__/' => $config['name'],
-            '/__user__/' => $config['user'],
+            '/__command__/'  => $config['command'],
+            '/__name__/'     => $config['name'],
+            '/__user__/'     => $config['user'],
             '/__numprocs__/' => $config['numprocs'],
-            '/__logfile__/' => $config['logfile']
+            '/__logfile__/'  => $config['logfile']
         ];
 
         $stub = file_get_contents(__DIR__ . '/stubs/supervisor-program.conf');
@@ -97,7 +122,7 @@ class Supervisor
                 throw new ProcessFailedException($process);
             }
 
-            echo $process->getOutput();
+            $this->inform($process->getOutput());
         }
     }
 }

@@ -46,9 +46,8 @@ class RegisterSupervisorCommand extends Command
      */
     public function __construct(Supervisor $supervisor)
     {
-        $this->supervisor = $supervisor;
-
         parent::__construct();
+        $this->supervisor = $supervisor;
     }
 
     /**
@@ -65,6 +64,7 @@ class RegisterSupervisorCommand extends Command
             'numprocs' => $this->option('numprocs'),
         ];
 
+        $this->supervisor->setCommand($this);
         $this->supervisor->generateProgram($config);
     }
 }

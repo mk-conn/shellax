@@ -10,7 +10,6 @@ namespace MkConn\Shellax\Console;
 
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -55,6 +54,7 @@ class PostInstallCommand extends Command
                 $args = [];
             }
 
+            $this->comment($artisanCommand . ' ' . implode(' ', $args));
             $this->call($artisanCommand, $args);
         }
 
