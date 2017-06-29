@@ -4,6 +4,26 @@ All Notable changes to `mk-conn/shellax` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.2.0] - 2017-06-29
+
+### Added
+- slightly more console output coloring
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
+### Todo
+- Tests
+
 ## [0.1.1] - 2017-06-29
 
 ### Added
