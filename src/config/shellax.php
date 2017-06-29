@@ -4,7 +4,7 @@ return [
     // post install tasks - e.g. cache clearing, running migrations, etc...
     'postinstall' => [
         'artisan' => [
-            'register:supervisor' => [
+            'shellax:supervisor-register' => [
                 '--name'     => '',
                 '--user'     => '',
                 '--command'  => '',

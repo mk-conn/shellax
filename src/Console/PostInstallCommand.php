@@ -67,15 +67,7 @@ class PostInstallCommand extends Command
 
         $shellCommands = config('shellax.postinstall.shell');
 
-        foreach ($shellCommands as $shellCommand => $args) {
-
-            if (is_array($args)) {
-                foreach ($args as $arg => $value) {
-                    $shellCommand .= $arg . ' ' . $value;
-                }
-            } else {
-                $shellCommand = $args;
-            }
+        foreach ($shellCommands as $shellCommand) {
 
             $process = new Process($shellCommand);
             $process->run();
@@ -83,7 +75,6 @@ class PostInstallCommand extends Command
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
-//            $this->output->write($shellCommand.': ');
             echo $process->getOutput();
         }
 

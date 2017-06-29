@@ -50,21 +50,5 @@ class ShellaxServiceProvider extends ServiceProvider
                     RegisterSupervisorCommand::class
                 ]);
         }
-
-//        if($this->run)
-
-//        $this->app->singleton(
-//            'command.shellax.postinstall-command', function () {
-//            return new PostInstallCommand();
-//        });
-
-//        $this->app->singleton(
-//            'command.shellax.register-shellax-command',
-//            function ($app) {
-//                return new RegisterSupervisorCommand($app['supervisor']);
-//            }
-//        );
-
-//        $this->commands(['command.shellax.postinstall-command', 'command.shellax.register-shellax-command']);
     }
 }
