@@ -4,6 +4,28 @@ All Notable changes to `mk-conn/shellax` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.1.0] - 2017-06-29
+
+### Added
+- artisan shellax:postinstall
+- artisan shellax:supervisor-register
+- config (shellax.php)
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
+### Todo
+- Tests
+
 ## [0.0.1a] - 2017-06-27
 
 ### Added

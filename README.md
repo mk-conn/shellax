@@ -33,9 +33,42 @@ Publish the shellax config
 php artisan vendor:publish --provider="MkConn\Shellax\Providers\ShellaxServiceProvider"
 ```
 
+Available artisan commands
 ```bash
 php artisan shellax:postintall
 php artisan shellax:supervisor-register
+```
+
+### Configuration
+Example configuration
+```php
+<?php
+
+$dir = __DIR__;
+$dir = realpath($dir . '/..');
+
+return [
+    // post install tasks - e.g. cache clearing, running migrations, etc...
+    'postinstall' => [
+        'artisan' => [
+            'shellax:supervisor-register' => [
+                '--name'     => 'your-fancy-name-here',
+                '--user'     => 'nginx', // user to run the following command
+                '--command'  => "/usr/bin/php {$dir}/artisan queue:work --tries=3 --timeout=10",
+                '--logfile'  => '/var/log/laravel-queue.log',
+                '--numprocs' => '4', // number of processes to run by supervisor
+            ]
+        ],
+        'shell' => [
+            '/etc/whatever-should-run -arg1'   
+        ]
+    ],
+    'supervisor'  => [
+        'config_dir'         => env('SUPERVISOR_CONFIG_DIR', '/etc/supervisor.d'),
+        'config_ext'         => env('SUPERVISOR_CONFIG_EXT', '.conf'),
+        'supervisor_bin_dir' => env('SUPERVISOR_BIN_DIR', '/usr/bin')
+    ]
+];
 ```
 
 ## Change log
@@ -58,7 +91,7 @@ If you discover any security related issues, please email :author_email instead 
 
 ## Credits
 
-- [:author_name][link-author]
+- [mk-conn][link-author]
 - [All Contributors][link-contributors]
 
 ## License
