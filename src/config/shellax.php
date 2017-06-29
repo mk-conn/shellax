@@ -13,12 +13,12 @@ return [
             ]
         ],
         'shell'   => [
-            'whoami',
-            'ls' => ['-l']
+            'whoami'
         ]
     ],
     'supervisor'  => [
-        'config_dir' => env('SUPERVISOR_CONFIG_DIR', '/etc/supervisor.d'),
-        'config_ext' => env('SUPERVISOR_CONFIG_EXT', '.conf')
+        'config_dir'         => env('SUPERVISOR_CONFIG_DIR', '/etc/supervisor.d'),
+        'config_ext'         => env('SUPERVISOR_CONFIG_EXT', '.conf'),
+        'supervisor_bin_dir' => env('SUPERVISOR_BIN_DIR', '/usr/bin')
     ]
 ];

@@ -46,7 +46,7 @@ class PostInstallCommand extends Command
      */
     protected function runArtisanCommands()
     {
-        $artisanCommands = config('shellax.postinstall.artisan');
+        $artisanCommands = config('shellax.postinstall.artisan', []);
 
         foreach ($artisanCommands as $artisanCommand => $args) {
             if (!is_array($args)) {
@@ -65,7 +65,7 @@ class PostInstallCommand extends Command
     protected function runShellCommands()
     {
 
-        $shellCommands = config('shellax.postinstall.shell');
+        $shellCommands = config('shellax.postinstall.shell', []);
 
         foreach ($shellCommands as $shellCommand) {
 
