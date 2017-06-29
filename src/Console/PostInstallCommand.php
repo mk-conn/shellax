@@ -49,11 +49,13 @@ class PostInstallCommand extends Command
         $artisanCommands = config('shellax.postinstall.artisan', []);
 
         foreach ($artisanCommands as $artisanCommand => $args) {
+
             if (!is_array($args)) {
+                $artisanCommand = $args;
                 $args = [];
             }
 
-            Artisan::call($artisanCommand, $args);
+            $this->call($artisanCommand, $args);
         }
 
         return $this;
