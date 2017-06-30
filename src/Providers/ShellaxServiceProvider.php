@@ -12,6 +12,7 @@ namespace MkConn\Shellax\Providers;
 use Illuminate\Support\ServiceProvider;
 use MkConn\Shellax\Console\PostInstallCommand;
 use MkConn\Shellax\Console\RegisterSupervisorCommand;
+use MkConn\Shellax\Console\SetupCron;
 use MkConn\Shellax\Supervisor;
 
 
@@ -47,7 +48,8 @@ class ShellaxServiceProvider extends ServiceProvider
             $this->commands(
                 [
                     PostInstallCommand::class,
-                    RegisterSupervisorCommand::class
+                    RegisterSupervisorCommand::class,
+                    SetupCron::class
                 ]);
         }
     }
