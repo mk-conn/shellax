@@ -37,6 +37,7 @@ Available artisan commands
 ```bash
 php artisan shellax:postintall
 php artisan shellax:supervisor-register
+php artisan shellax:setup-cron
 ```
 
 ### Configuration
