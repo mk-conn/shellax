@@ -4,22 +4,18 @@ All Notable changes to `mk-conn/shellax` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.3.0] - 2017-06-30
+
+### Added
+- shellax:setup-cron command
+
+### Todo
+- Tests
+
 ## [0.2.0] - 2017-06-29
 
 ### Added
 - slightly more console output coloring
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ### Todo
 - Tests
@@ -28,18 +24,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - PostInstallCommand: use `$this->call()` to call other artisan commands instead of the facade
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ### Todo
 - Tests
@@ -50,18 +34,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - artisan shellax:postinstall
 - artisan shellax:supervisor-register
 - config (shellax.php)
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
 
 ### Todo
 - Tests
