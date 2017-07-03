@@ -4,8 +4,6 @@ namespace MkConn\Shellax\Console;
 
 
 use Cron\CronExpression;
-use Illuminate\Cache\NullStore;
-use Illuminate\Cache\Repository;
 use Illuminate\Console\Command;
 use Illuminate\Console\Scheduling;
 
@@ -16,6 +14,8 @@ use Illuminate\Console\Scheduling;
  */
 class SetupCron extends Command
 {
+    use Scheduling\ManagesFrequencies;
+
     /**
      * @var string
      */
@@ -25,7 +25,7 @@ class SetupCron extends Command
                             {--at= : Specify when exactly (when scheduled daily or hourly), e.g. 13:00 or 17}
                             {--on= : Specify when exactly (when scheduled monthly), e.g. 4,15:00 -> run every month on the 4th, at 15:00}
                             {--command= : The command to run}
-                            {--as= : The user to run the command}
+                            {--user= : The user who runs the command}
                             {--output= : Where to send the output}';
 
     /**
@@ -42,6 +42,10 @@ class SetupCron extends Command
      * @var string
      */
     protected $name = null;
+
+    public $expression = '* * * * * *';
+
+    public $output = '/dev/null';
 
     /**
      *
@@ -62,21 +66,15 @@ class SetupCron extends Command
         $command = $this->option('command');
         $at = $this->option('at');
         $on = $this->option('on');
-        $user = $this->option('as');
-        $output = $this->option('output');
+        $user = $this->option('user');
+        $output = $this->option('output') ?: '/dev/null';
 
-        if (!$user) {
-            throw new \InvalidArgumentException('The --as (user) option must be set.');
-        }
         if (!$this->name) {
             throw new \InvalidArgumentException('The --name option must be set.');
         }
         if (!$command) {
             throw new \InvalidArgumentException('The --command option must be set.');
         }
-
-        $scheduleEvent = new Scheduling\Event(new Scheduling\CacheMutex(new Repository(new NullStore())), $command);
-        $scheduleEvent->user($user);
 
         $method = camel_case($schedule);
         $args = null;
@@ -91,21 +89,27 @@ class SetupCron extends Command
             $args = $on;
         }
 
-        if (method_exists($scheduleEvent, $method)) {
-            $scheduleEvent->{$method}($args);
+        if (method_exists($this, $method)) {
+            $this->{$method}($args);
         } else {
             if (CronExpression::isValidExpression($schedule)) {
-                $scheduleEvent->cron($schedule);
+                $this->cron($schedule);
             }
             throw new \InvalidArgumentException(
                 "Schedule `$schedule` is not a valid frequency option or cron expression.");
         }
 
-        if ($output) {
-            $scheduleEvent->sendOutputTo($output);
-        }
+        $command = $user . ' ' . $command;
 
-        $this->entry = $scheduleEvent->getExpression() . ' ' . $scheduleEvent->getSummaryForDisplay();
+        $commandParts = [
+            $this->expression,
+            escapeshellcmd(trim($command)),
+            '>>',
+            $output,
+            '2>&1'
+        ];
+
+        $this->entry = implode(' ', $commandParts);
 
         $this->comment('Cron entry: ' . $this->entry);
 
