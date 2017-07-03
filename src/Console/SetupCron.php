@@ -43,8 +43,14 @@ class SetupCron extends Command
      */
     protected $name = null;
 
-    public $expression = '* * * * * *';
+    /**
+     * @var string
+     */
+    public $expression = '* * * * *';
 
+    /**
+     * @var string
+     */
     public $output = '/dev/null';
 
     /**
