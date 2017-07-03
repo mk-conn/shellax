@@ -131,7 +131,7 @@ class SetupCron extends Command
         if (strlen($this->entry) > 0) {
             if (is_dir($cronDir)) {
                 $filename = $cronDir . DIRECTORY_SEPARATOR . $this->name;
-                file_put_contents($filename, $this->entry);
+                file_put_contents($filename, $this->entry . PHP_EOL);
 
                 $this->info('Saved cronjob to ' . $filename);
             }
