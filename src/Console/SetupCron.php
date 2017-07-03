@@ -25,7 +25,7 @@ class SetupCron extends Command
                             {--at= : Specify when exactly (when scheduled daily or hourly), e.g. 13:00 or 17}
                             {--on= : Specify when exactly (when scheduled monthly), e.g. 4,15:00 -> run every month on the 4th, at 15:00}
                             {--command= : The command to run}
-                            {--user= : The user who runs the command}
+                            {--as= : The user who runs the command}
                             {--output= : Where to send the output}';
 
     /**
@@ -66,7 +66,7 @@ class SetupCron extends Command
         $command = $this->option('command');
         $at = $this->option('at');
         $on = $this->option('on');
-        $user = $this->option('user');
+        $user = $this->option('as');
         $output = $this->option('output') ?: '/dev/null';
 
         if (!$this->name) {
