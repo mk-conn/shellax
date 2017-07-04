@@ -36,17 +36,23 @@ class PostInstallCommand extends Command
      */
     public function handle()
     {
-        $this->runArtisanCommands()
-             ->runShellCommands();
+        $postinstall = config('shellax.postinstall');
+
+        foreach ($postinstall as $type => $commands) {
+            $method = 'run' . ucfirst($type) . 'Commands';
+            $config = config('shellax.postinstall.' . $type);
+
+            $this->$method($commands);
+        }
     }
 
     /**
+     * @param array $artisanCommands
+     *
      * @return $this
      */
-    protected function runArtisanCommands()
+    protected function runArtisanCommands(array $artisanCommands = [])
     {
-        $artisanCommands = config('shellax.postinstall.artisan', []);
-
         foreach ($artisanCommands as $artisanCommand => $args) {
 
             if (!is_array($args)) {
@@ -62,13 +68,12 @@ class PostInstallCommand extends Command
     }
 
     /**
+     * @param array $shellCommands
+     *
      * @return $this
      */
-    protected function runShellCommands()
+    protected function runShellCommands(array $shellCommands = [])
     {
-
-        $shellCommands = config('shellax.postinstall.shell', []);
-
         foreach ($shellCommands as $shellCommand) {
 
             $process = new Process($shellCommand);
