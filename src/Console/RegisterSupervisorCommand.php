@@ -58,11 +58,11 @@ class RegisterSupervisorCommand extends Command
     {
 
         $config = [
-            'name'     => $this->option('name'),
-            'user'     => $this->option('user'),
-            'command'  => $this->option('command'),
-            'logfile'  => $this->option('logfile'),
-            'numprocs' => $this->option('numprocs')
+            'name'           => $this->option('name'),
+            'user'           => $this->option('user'),
+            'command'        => $this->option('command'),
+            'stdout_logfile' => $this->option('logfile'),
+            'numprocs'       => $this->option('numprocs')
         ];
 
         if ($this->option('environment')) {
