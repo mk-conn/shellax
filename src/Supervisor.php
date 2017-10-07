@@ -73,17 +73,23 @@ class Supervisor
 
         $this->preCheck();
 
-        $replace = [
-            '/__command__/'  => $config['command'],
-            '/__name__/'     => $config['name'],
-            '/__user__/'     => $config['user'],
-            '/__numprocs__/' => $config['numprocs'],
-            '/__logfile__/'  => $config['logfile']
-        ];
+        $config['autostart'] = 'true';
+        $config['autorestart'] = 'true';
+        $config['redirect_stderr'] = 'true';
 
         $stub = file_get_contents(__DIR__ . '/stubs/supervisor-program.conf');
 
+        $replace = [
+            '/__name__/'     => $config['name'],
+        ];
+
+        $stub = file_get_contents(__DIR__ . '/stubs/supervisor-program.conf');
+        $programConfig = $stub . "\n";
         $programConfig = preg_replace(array_keys($replace), array_values($replace), $stub);
+
+        foreach ($config as $key => $value) {
+            $programConfig .= "$key=$value\n";
+        }
 
         // write to /etc/supervisor.d/<name>.conf
         $supervisorConfDir = config('shellax.supervisor.config_dir');

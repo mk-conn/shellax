@@ -27,7 +27,8 @@ class RegisterSupervisorCommand extends Command
                             {--user= : The user the process should run with.} 
                             {--command= : The command to be executed.}
                             {--numprocs=4 : The number of processes to be run.}
-                            {--logfile= : Logfile to write.}';
+                            {--logfile= : Logfile to write.}
+                            {--environment= : Environment (e.g. PATH=%s).}';
 
     /**
      * @var string
@@ -61,8 +62,12 @@ class RegisterSupervisorCommand extends Command
             'user'     => $this->option('user'),
             'command'  => $this->option('command'),
             'logfile'  => $this->option('logfile'),
-            'numprocs' => $this->option('numprocs'),
+            'numprocs' => $this->option('numprocs')
         ];
+
+        if ($this->option('environment')) {
+            $config['environment'] = $this->option('environment');
+        }
 
         $this->supervisor->setCommand($this);
         $this->supervisor->generateProgram($config);
