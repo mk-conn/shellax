@@ -10,6 +10,7 @@ namespace MkConn\Shellax\Console;
 
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -40,7 +41,6 @@ class PostInstallCommand extends Command
 
         foreach ($postinstall as $type => $commands) {
             $method = 'run' . ucfirst($type) . 'Commands';
-            $config = config('shellax.postinstall.' . $type);
 
             $this->$method($commands);
         }
@@ -60,8 +60,15 @@ class PostInstallCommand extends Command
                 $args = [];
             }
 
-            $this->comment($artisanCommand . ' ' . implode(' ', $args));
-            $this->call($artisanCommand, $args);
+            if (is_array($args) && !Arr::isAssoc($args)) {
+                foreach ($args as $commands) {
+                    $this->comment($artisanCommand . ' ' . implode(' ', $commands));
+                    $this->call($artisanCommand, $commands);
+                }
+            } else {
+                $this->comment($artisanCommand . ' ' . implode(' ', $args));
+                $this->call($artisanCommand, $args);
+            }
         }
 
         return $this;
